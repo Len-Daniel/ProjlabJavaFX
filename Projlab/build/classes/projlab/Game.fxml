@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="pGame" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projlab.GameController">
+    <stylesheets>
+        <URL value="@game.css" />
+    </stylesheets>
+   <children>
+      <Button fx:id="bStart" layoutX="241.0" layoutY="188.0" mnemonicParsing="false" onAction="#startGame" text="Click to start game." />
+      <Label fx:id="lStart" layoutX="243.0" layoutY="83.0" text="És megy a game geci." visible="false" />
+   </children>
+</AnchorPane>
