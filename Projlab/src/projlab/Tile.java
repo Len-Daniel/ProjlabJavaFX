@@ -91,6 +91,10 @@ public class Tile {
             return neighbors.get(idx);
 	}
         
+        public int getNeighborIndex(Tile t){
+            return neighbors.indexOf(t);
+        }
+        
         //visszaadja az összes szomszédját a csempének
         public ArrayList<Tile> getNeighbors(){
             return neighbors;
@@ -225,4 +229,20 @@ public class Tile {
                 t.setJingled(!tmp);
             }
 	}
+        
+        public Tile getLeftNeighborOf(Tile t){
+            int idx = neighbors.indexOf(t);
+            if(idx - 1 < 0)
+                return neighbors.get(neighbors.size());
+            else
+                return neighbors.get(idx - 1);
+        }
+        
+        public Tile getRightNeighborOf(Tile t){
+            int idx = neighbors.indexOf(t);
+            if(idx + 1 >= neighbors.size())
+                return neighbors.get(0);
+            else
+                return neighbors.get(idx + 1);
+        }
 }
