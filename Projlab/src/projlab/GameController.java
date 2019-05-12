@@ -7,6 +7,8 @@ package projlab;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 
 /**
  * FXML Controller class
@@ -47,6 +50,10 @@ public class GameController implements Initializable {
     private Label lStart;
     @FXML 
     private ImageView map; 
+    @FXML
+    private FlowPane container; 
+    
+    private List<Label> labels; 
     
     AnimationTimer timer = new AnimationTimer(){
             @Override
@@ -67,7 +74,7 @@ public class GameController implements Initializable {
     
     //Itt lesz a fő loop, a random dolgok meg ilyesmi.
     public void update(){
-    
+        
     }
     
     private void loadSecond(ActionEvent e) throws IOException{
@@ -79,6 +86,7 @@ public class GameController implements Initializable {
     @FXML
     private void startGame(ActionEvent event) throws IOException {
         loadSecond(event);
+        createMap();
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A:
