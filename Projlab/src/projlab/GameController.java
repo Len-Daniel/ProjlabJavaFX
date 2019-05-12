@@ -5,11 +5,13 @@
  */
 package projlab;
 
+import java.io.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
@@ -22,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -55,6 +58,8 @@ public class GameController implements Initializable {
     
     private List<Label> labels; 
     
+    private TreeMap<String, Tile> tiles = new TreeMap<String, Tile>();
+    
     AnimationTimer timer = new AnimationTimer(){
             @Override
             public void handle(long now){
@@ -69,7 +74,28 @@ public class GameController implements Initializable {
     
     //Ide kéne a pálya felépítési, az elemek inicializálása.
     public void createMap(){
-        
+        try(BufferedReader nbr = new BufferedReader(new FileReader("TileNames.txt"));
+            BufferedReader cbr = new BufferedReader(new FileReader("TileConnect.txt"));)
+        {
+            String line = nbr.readLine();
+            while(line != null){
+                String[] tile = line.split(" ");
+                if(tile[0].equals("btile")) tiles.put(new String(tile[1]), new BreakableTile());
+                else if (tile[0].equals("t")) tiles.put(new String(tile[1]), new Tile());
+                tiles.put(new String(line), new Tile());
+                line = nbr.readLine();
+            }
+            
+            line = cbr.readLine();
+            while(line != null){
+                String[] names = line.split(" ");
+                tiles.get(names[0]).addNeighbor(tiles.get(names[2]));
+                line = cbr.readLine();
+            }
+            
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     //Itt lesz a fő loop, a random dolgok meg ilyesmi.
