@@ -17,6 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -43,6 +45,8 @@ public class GameController implements Initializable {
     private AnchorPane pGame;
     @FXML
     private Label lStart;
+    @FXML 
+    private ImageView map; 
     
     AnimationTimer timer = new AnimationTimer(){
             @Override
@@ -66,11 +70,15 @@ public class GameController implements Initializable {
     
     }
     
+    private void loadSecond(ActionEvent e) throws IOException{
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("InGame.fxml"));
+        pGame.getChildren().setAll(pane);
+    }
+    
     //Ez fut le, ha megnyomod a bStart gombot
     @FXML
-    private void startGame(ActionEvent event) {
-        bStart.setVisible(false);
-        lStart.setVisible(true);
+    private void startGame(ActionEvent event) throws IOException {
+        loadSecond(event);
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A:

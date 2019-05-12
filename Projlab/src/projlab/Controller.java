@@ -75,29 +75,21 @@ public class Controller {
     public static void removePanda(Panda pnd) {
         pandas.remove(pnd);
     }
+    
+    public void add(Orangutan o, String name){
+        orangutans.put(name, o);
+    }
+    
+    public void add(Panda p, String name){
+        pandas.put(name, p);
+    }
 
-    /**
-     * Hozzáad egy megfelelő objektumot ahhoz a listához, mihez tartozik
-     *
-     * Vannak bennne a kiíratások, amik csak teszteléshez kellettek
-     *
-     * @param tmp   Az átadandó objektum
-     * @param name  Az átandó objektm neve
-     */
-    public void add(Object tmp, String name) {
-        if (tmp instanceof Orangutan){
-            orangutans.put(name, (Orangutan) tmp);
-            System.out.println(orangutans.size() + " orangutans");
-        } else if (tmp instanceof Panda){
-            pandas.put(name, (Panda)tmp);
-            System.out.println(pandas.size() + " pandas");
-        } else if (tmp instanceof  Element){
-            elements.put(name, (Element)tmp);
-            System.out.println(elements.size() + " elements");
-        } else if (tmp instanceof Tile){
-            tiles.put(name, (Tile)tmp);
-            System.out.println(tiles.size() + " tiles");
-        }
+    public void add(Element e, String name){
+        elements.put(name, e);
+    }
+
+    public void add(Tile t, String name){
+        tiles.put(name, t);
     }
 
     /**
