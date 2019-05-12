@@ -118,6 +118,12 @@ public class Tile {
             neighbors.set(idx, tl);
         }
         
+        public void addNeighbor(Tile t){
+            if(neighbors.contains(t)) return;
+            t.getNeighbors().add(this);
+            neighbors.add(t);
+        }
+        
         /**
          * Leszedi a csempén lévő elemet a csempéről.
          */
