@@ -58,7 +58,7 @@ public class GameController implements Initializable {
     
     private List<Label> labels; 
     
-    private TreeMap<String, Tile> tiles = new TreeMap<String, Tile>();
+    private TreeMap<String, Tile> tiles = new TreeMap<>();
     
     AnimationTimer timer = new AnimationTimer(){
             @Override
@@ -80,9 +80,8 @@ public class GameController implements Initializable {
             String line = nbr.readLine();
             while(line != null){
                 String[] tile = line.split(" ");
-                if(tile[0].equals("btile")) tiles.put(new String(tile[1]), new BreakableTile());
-                else if (tile[0].equals("t")) tiles.put(new String(tile[1]), new Tile());
-                tiles.put(new String(line), new Tile());
+                if(tile[0].equals("B")) tiles.put(tile[1], new BreakableTile());
+                else if (tile[0].equals("T")) tiles.put(tile[1], new Tile());
                 line = nbr.readLine();
             }
             
