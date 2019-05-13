@@ -197,10 +197,8 @@ public class GameController implements Initializable {
         player1Points.setVisible(true);
         player1Points.setVisible(true);
         createMap();
-        /*o1.setTile(tiles.get("Tile6"));
-        o2.setTile(tiles.get("Tile26"));
         selectedTileO1 = o1.getTile().getNeighbor(0);
-        selectedTileO2 = o2.getTile().getNeighbor(0);*/
+        selectedTileO2 = o2.getTile().getNeighbor(0);
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A:
