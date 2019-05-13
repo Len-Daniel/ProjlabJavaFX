@@ -196,7 +196,51 @@ public class GameController implements Initializable {
     
     //Itt lesz a fő loop, a random dolgok meg ilyesmi.
     public void update(){
+        String str; 
+        String tmp;
+        Text txt;
+        for (String key : pandas.keySet())
+        {
+            tmp = getKey(tiles, pandas.get(key).getTile());
+            txt = texts.get(tmp);
+            txt.setText("");
+            pandas.get(key).step();
+            tmp = getKey(tiles, pandas.get(key).getTile());
+            txt = texts.get(tmp);
+            str = getKey(pandas, pandas.get(key));
+            txt.setText(str);
+        }
         
+        for (String key : gamemachines.keySet())
+        {
+            gamemachines.get(key).step();
+            tmp = getKey(tiles, gamemachines.get(key).getTile());
+            txt = texts.get(tmp);
+            if (gamemachines.get(key).getJingled()){
+                txt.setFill(Color.RED);
+            }
+            else{
+                txt.setFill(Color.BLACK);
+            }   
+        }
+        
+        for (String key : chocomachines.keySet())
+        {
+            chocomachines.get(key).step();
+            tmp = getKey(tiles, chocomachines.get(key).getTile());
+            txt = texts.get(tmp);
+            if (chocomachines.get(key).getPiped()){
+                txt.setFill(Color.RED);
+            }
+            else{
+                txt.setFill(Color.BLACK);
+            }
+        }
+        
+        for (String key : armchairs.keySet())
+        {
+            armchairs.get(key).step();
+        }
     }
     
     //Ez fut le, ha megnyomod a bStart gombot
