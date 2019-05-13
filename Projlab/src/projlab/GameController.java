@@ -72,15 +72,6 @@ public class GameController implements Initializable {
             }
         };
    
-    public String getTileName(Tile t0){
-
-        for (Entry<String, Tile> entry : tiles.entrySet()) {
-            if (entry.getValue() == t0) {
-                return entry.getKey();
-            }
-        }
-    return null;
-    }
     
     public <K, V> K getKey(Map<K, V> map, V value) {
         for (Entry<K, V> entry : map.entrySet()) {
@@ -206,27 +197,79 @@ public class GameController implements Initializable {
         player1Points.setVisible(true);
         player1Points.setVisible(true);
         createMap();
+        /*o1.setTile(tiles.get("Tile6"));
+        o2.setTile(tiles.get("Tile26"));
+        selectedTileO1 = o1.getTile().getNeighbor(0);
+        selectedTileO2 = o2.getTile().getNeighbor(0);*/
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A:
+                    texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
                     selectedTileO1 = o1.getTile().getLeftNeighborOf(selectedTileO1);
+                    texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     break;
                 case D:
+                    texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
                     selectedTileO1 = o1.getTile().getLeftNeighborOf(selectedTileO1);
+                    texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     break;    
                 case SPACE:
+                    Tile previousTileo1 = o1.getTile();
                     o1.move(o1.getTile().getNeighborIndex(selectedTileO1));
-                    selectedTileO1 = o1.getTile().getNeighbor(0);
+                    Tile newTileo1 = o1.getTile();
+                    if(previousTileo1 != newTileo1){
+                        texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
+                        texts.get(getKey(tiles, newTileo1)).setText("o1");
+                        if(o1.getHoldsPanda() == null){
+                            texts.get(getKey(tiles, previousTileo1)).setText("");
+                        }
+                        else{
+                            Panda heldo1 = o1.getHoldsPanda();
+                            while(heldo1 != null){
+                                newTileo1 = previousTileo1;
+                                previousTileo1 = heldo1.getTile();
+                                texts.get(getKey(tiles, newTileo1)).setText(getKey(pandas, heldo1));
+                                texts.get(getKey(tiles, previousTileo1)).setText("");
+                                heldo1 = heldo1.getHoldsPanda();
+                            }
+                        }
+                        selectedTileO1 = o1.getTile().getNeighbor(0);
+                        texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
+                    }
                     break;
                 case LEFT:
+                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(false);
                     selectedTileO2 = o2.getTile().getLeftNeighborOf(selectedTileO2);
+                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(true);
                     break;
                 case RIGHT:
+                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(false);
                     selectedTileO2 = o2.getTile().getLeftNeighborOf(selectedTileO2);
+                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(true);
                     break;
                 case ENTER:
+                    Tile previousTileo2 = o2.getTile();
                     o2.move(o2.getTile().getNeighborIndex(selectedTileO2));
-                    selectedTileO1 = o2.getTile().getNeighbor(0);
+                    Tile newTileo2 = o2.getTile();
+                    if(previousTileo2 != newTileo2){
+                        texts.get(getKey(tiles, selectedTileO2)).setUnderline(false);
+                        texts.get(getKey(tiles, newTileo2)).setText("o2");
+                        if(o2.getHoldsPanda() == null){
+                            texts.get(getKey(tiles, previousTileo2)).setText("");
+                        }
+                        else{
+                            Panda heldo2 = o2.getHoldsPanda();
+                            while(heldo2 != null){
+                                newTileo2 = previousTileo2;
+                                previousTileo2 = heldo2.getTile();
+                                texts.get(getKey(tiles, newTileo2)).setText(getKey(pandas, heldo2));
+                                texts.get(getKey(tiles, previousTileo2)).setText("");
+                                heldo2 = heldo2.getHoldsPanda();
+                            }
+                        }
+                        selectedTileO1 = o1.getTile().getNeighbor(0);
+                        texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
+                    }
                     break;
                 case ESCAPE:
                     System.exit(0);
