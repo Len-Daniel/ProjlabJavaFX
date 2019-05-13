@@ -241,15 +241,15 @@ public class Tile {
         
         public Tile getLeftNeighborOf(Tile t){
             int idx = neighbors.indexOf(t);
-            if(idx - 1 < 0)
-                return neighbors.get(neighbors.size());
+            if(idx == 0)
+                return neighbors.get(neighbors.size()-1);
             else
                 return neighbors.get(idx - 1);
         }
         
         public Tile getRightNeighborOf(Tile t){
             int idx = neighbors.indexOf(t);
-            if(idx + 1 >= neighbors.size())
+            if(idx == neighbors.size() - 1)
                 return neighbors.get(0);
             else
                 return neighbors.get(idx + 1);

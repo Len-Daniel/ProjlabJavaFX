@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import java.util.Map.Entry;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -264,7 +265,7 @@ public class GameController implements Initializable {
                     break;
                 case D:
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
-                    selectedTileO1 = o1.getTile().getLeftNeighborOf(selectedTileO1);
+                    selectedTileO1 = o1.getTile().getRightNeighborOf(selectedTileO1);
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     break;    
                 case SPACE:
@@ -298,7 +299,7 @@ public class GameController implements Initializable {
                     break;
                 case RIGHT:
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
-                    selectedTileO2 = o2.getTile().getLeftNeighborOf(selectedTileO2);
+                    selectedTileO2 = o2.getTile().getRightNeighborOf(selectedTileO2);
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                     break;
                 case ENTER:
