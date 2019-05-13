@@ -15,9 +15,21 @@ public class ChocoMachine implements Element, Steppable{
     //Tárolja, hogy a csokiautomata melyik csempén van.
     private Tile tile;
     
+    //True, ha a csokiautomata sípolt
+    private boolean piped;
+    
     //Meghívja a csempére azt a függvényt, amely invertálja a szomszédos csempék piped változóját.
     void invertPiped() {
         tile.invertNeighborsPiped();
+    }
+    
+    /**
+    * 
+    * @return 
+    * Visszatért a piped attribútum értékével.
+    */
+    public boolean getPiped() {
+            return this.piped;
     }
     
     //Véletlenszerűen meghívja az invertPiped() függvényt.
@@ -43,5 +55,9 @@ public class ChocoMachine implements Element, Steppable{
     //Beállítja a tile attribútumot az argumentumként kapott tl-re.
     public void setTile(Tile tl){
         tile = tl;
+    }
+    
+    public Tile getTile(){
+        return tile;
     }
 }
