@@ -8,12 +8,10 @@ package projlab;
 import java.io.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,9 +54,9 @@ public class GameController implements Initializable {
     @FXML
     private FlowPane container; 
     
-    private List<Label> labels; 
     
-    private TreeMap<String, Tile> tiles = new TreeMap<>();
+    private TreeMap<String, Tile> tiles = new TreeMap<String, Tile>();
+    private Map<String, Text> texts = new HashMap<String, Text>();
     
     AnimationTimer timer = new AnimationTimer(){
             @Override
@@ -99,32 +97,43 @@ public class GameController implements Initializable {
     
     //Ide kéne a pálya felépítési, az elemek inicializálása.
     public void createMap(){
-        try(BufferedReader nbr = new BufferedReader(new FileReader("TileNames.txt"));
+        try{BufferedReader nbr = new BufferedReader(new FileReader("TileNames.txt"));
             BufferedReader cbr = new BufferedReader(new FileReader("TileConnect.txt"));
-            BufferedReader pbr = new BufferedReader(new FileReader("Placing.txt"));)
-        {
+            BufferedReader tbr = new BufferedReader(new FileReader("TextConnect.txt"));
+            BufferedReader pbr = new BufferedReader(new FileReader("Placing.txt"));
+            
             String line = nbr.readLine();
+                
             while(line != null){
-                String[] tile = line.split(",");
-                if(tile[0].equals("B")) tiles.put(tile[1], new BreakableTile());
-                else if (tile[0].equals("T")) tiles.put(tile[1], new Tile());
+                if(line.charAt(0)=='B') tiles.put(line, new BreakableTile());
+                else if (line.charAt(0)=='T') tiles.put(line, new Tile());
                 line = nbr.readLine();
             }
             
             line = cbr.readLine();
             while(line != null){
                 String[] names = line.split(",");
-                tiles.get(names[0]).addNeighbor(tiles.get(names[2]));
+                tiles.get(names[0]).addNeighbor(tiles.get(names[1]));
                 line = cbr.readLine();
+            }
+            line = tbr.readLine();
+            int idx = 1;
+            while(line!=null) {
+                String name = "Tile"+Integer.toString(idx);
+                String[] koord = line.split(" ");
+                texts.put(name, new Text(Integer.parseInt(koord[0]), Integer.parseInt(koord[1]),""));
+                pGame.getChildren().add(texts.get(name));
+                idx++;
+                line = tbr.readLine();
             }
             
             line = pbr.readLine();
             while(line != null){
                 String[] names = line.split(",");
                 if (names.length < 3)
-                    tiles.get(names[0].substring(1, names[0].length())).setElement(type(names[1]));
-                else 
-                    tiles.get(names[0].substring(1, names[0].length())).setElement(new Exit(tiles.get(names[2])));
+                    tiles.get(names[0]).setElement(type(names[1]));
+                else
+                    tiles.get(names[0]).setElement(new Exit(tiles.get(names[2])));
                 line = pbr.readLine();
             }
         }catch(IOException e){
