@@ -82,6 +82,15 @@ public class GameController implements Initializable {
     return null;
     }
     
+    public <K, V> K getKey(Map<K, V> map, V value) {
+        for (Entry<K, V> entry : map.entrySet()) {
+            if (entry.getValue() == value) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }//példa: String keyString = getKey(tiles, vmilyenTile);
+    
     /**
      * Initializes the controller class.
      */
