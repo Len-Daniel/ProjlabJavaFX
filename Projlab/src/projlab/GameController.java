@@ -106,36 +106,43 @@ public class GameController implements Initializable {
                 JingleFearPanda jfpanda = new JingleFearPanda();
                 jfpanda.setTile(t);
                 pandas.put(rakdmanbele(pandas, "JFP"), jfpanda);
+                felrak("JFP", t);
                 return jfpanda;
             case "ppanda":
                 PipingFearPanda pfpanda = new PipingFearPanda(); 
                 pfpanda.setTile(t);
                 pandas.put(rakdmanbele(pandas, "PFP"), pfpanda);
+                felrak("PFP", t);
                 return pfpanda; 
             case "spanda":
                 SleepyPanda spanda = new SleepyPanda(); 
                 spanda.setTile(t);
                 pandas.put(rakdmanbele(pandas, "SP"), spanda);
+                felrak("SP", t);
                 return spanda; 
             case "cupboard":
                 Cupboard cupboard = new Cupboard(); 
                 cupboard.setTile(t);
                 cupboards.put(rakdmanbele(cupboards, "CP"), cupboard);
+                felrak("CP", t);
                 return cupboard;
             case "gamemachine":
                 GameMachine gamemachine = new GameMachine(); 
                 gamemachine.setTile(t);
                 gamemachines.put(rakdmanbele(gamemachines, "GM"), gamemachine); 
+                felrak("GM", t);
                 return gamemachine;
             case "chocomachine":
                 ChocoMachine chocomachine = new ChocoMachine(); 
                 chocomachine.setTile(t);
-                chocomachines.put(rakdmanbele(chocomachines, "CM"), chocomachine); 
+                chocomachines.put(rakdmanbele(chocomachines, "CM"), chocomachine);
+                felrak("CM", t);
                 return chocomachine; 
             case "armchair":
                 Armchair armchair = new Armchair();
                 armchair.setTile(t);
                 armchairs.put(rakdmanbele(armchairs, "AC"), armchair);
+                felrak("AC", t);
                 return armchair;
             case "exit":
                 return new Exit();
@@ -156,6 +163,10 @@ public class GameController implements Initializable {
     public String rakdmanbele(Map<String, ?> m, String s) {
         String asd = s+Integer.toString(m.size()+1);
         return asd;
+    }
+    public void felrak(String s, Tile t) {
+        String ks = getKey(tiles, t);
+        texts.get(ks).setText(s);
     }
     
     //Ide kéne a pálya felépítési, az elemek inicializálása.
@@ -213,8 +224,11 @@ public class GameController implements Initializable {
                     tiles.get(names[0]).setElement(type(names[1], tiles.get(names[0])));
                 
                 else
-                {ext = new Exit(tiles.get(names[2]));
-                    tiles.get(names[0]).setElement(ext);}
+                {
+                    ext = new Exit(tiles.get(names[2]));
+                    felrak("Exit", tiles.get(names[0]));
+                    tiles.get(names[0]).setElement(ext);
+                }
                 line = pbr.readLine();
             }
                 cupboards.get("CP1").setPair(cupboards.get("CP2"));
@@ -299,7 +313,8 @@ public class GameController implements Initializable {
             switch (e.getCode()) {
                 case A:
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
-                    texts.get(getKey(tiles, selectedTileO1)).setText("");
+                    if(texts.get(getKey(tiles, selectedTileO1)).getText() == "*selected*")
+                        texts.get(getKey(tiles, selectedTileO1)).setText("");
                     selectedTileO1 = o1.getTile().getLeftNeighborOf(selectedTileO1);
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
@@ -307,7 +322,8 @@ public class GameController implements Initializable {
                     break;
                 case D:
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
-                    texts.get(getKey(tiles, selectedTileO1)).setText("");
+                    if(texts.get(getKey(tiles, selectedTileO1)).getText() == "*selected*")
+                        texts.get(getKey(tiles, selectedTileO1)).setText("");
                     selectedTileO1 = o1.getTile().getRightNeighborOf(selectedTileO1);
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
@@ -341,7 +357,8 @@ public class GameController implements Initializable {
                     break;
                 case LEFT:
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
-                    texts.get(getKey(tiles, selectedTileO2)).setText("");
+                    if(texts.get(getKey(tiles, selectedTileO2)).getText() == "*selected*")
+                        texts.get(getKey(tiles, selectedTileO2)).setText("");
                     selectedTileO2 = o2.getTile().getLeftNeighborOf(selectedTileO2);
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                     if(texts.get(getKey(tiles, selectedTileO2)).getText() == "")
@@ -349,7 +366,8 @@ public class GameController implements Initializable {
                     break;
                 case RIGHT:
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
-                    texts.get(getKey(tiles, selectedTileO2)).setText("");
+                    if(texts.get(getKey(tiles, selectedTileO2)).getText() == "*selected*")
+                        texts.get(getKey(tiles, selectedTileO2)).setText("");
                     selectedTileO2 = o2.getTile().getRightNeighborOf(selectedTileO2);
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                     if(texts.get(getKey(tiles, selectedTileO2)).getText() == "")
