@@ -17,11 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 
 /**
@@ -44,16 +41,20 @@ public class GameController implements Initializable {
     private Tile selectedTileO2;
     
     @FXML
+    private AnchorPane pGame;
+    @FXML 
+    private ImageView mapPic; 
+    @FXML
     private Button bStart;
     @FXML
-    private AnchorPane pGame;
+    private Text player1Points;
     @FXML
-    private Label lStart;
-    @FXML 
-    private ImageView map; 
+    private Text player2Points;
     @FXML
-    private FlowPane container; 
-    
+    private Text pl1Text;
+    @FXML
+    private Text pl2Text;
+
     
     private TreeMap<String, Tile> tiles = new TreeMap<String, Tile>();
     private Map<String, Text> texts = new HashMap<String, Text>();
@@ -127,7 +128,7 @@ public class GameController implements Initializable {
                 line = tbr.readLine();
             }
             
-            line = pbr.readLine();
+            /*line = pbr.readLine();
             while(line != null){
                 String[] names = line.split(",");
                 if (names.length < 3)
@@ -135,7 +136,7 @@ public class GameController implements Initializable {
                 else
                     tiles.get(names[0]).setElement(new Exit(tiles.get(names[2])));
                 line = pbr.readLine();
-            }
+            }*/
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
@@ -146,15 +147,15 @@ public class GameController implements Initializable {
         
     }
     
-    private void loadSecond(ActionEvent e) throws IOException{
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("InGame.fxml"));
-        pGame.getChildren().setAll(pane);
-    }
-    
     //Ez fut le, ha megnyomod a bStart gombot
     @FXML
     private void startGame(ActionEvent event) throws IOException {
-        loadSecond(event);
+        bStart.setVisible(false);
+        mapPic.setVisible(true);
+        pl1Text.setVisible(true);
+        pl2Text.setVisible(true);
+        player1Points.setVisible(true);
+        player1Points.setVisible(true);
         createMap();
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
