@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import java.util.Map.Entry;
 
 /**
  * FXML Controller class
@@ -65,6 +66,17 @@ public class GameController implements Initializable {
                     update();
             }
         };
+   
+    public String getTileName(Tile t0){
+
+        for (Entry<String, Tile> entry : tiles.entrySet()) {
+            if (entry.getValue() == t0) {
+                return entry.getKey();
+            }
+        }
+    return null;
+    }
+    
     /**
      * Initializes the controller class.
      */
