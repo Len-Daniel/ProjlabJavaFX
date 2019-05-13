@@ -16,10 +16,11 @@ public class GameMachine implements Element, Steppable {
     private Tile tile;
     
     //True, ha a játékgép csilingelt
-    private boolean jingled;
+    private boolean jingled = false;
  
     //Meghívja a csempére azt a függvényt, amely invertálja a szomszédos csempék jingled változóját.
     void invertJingled() {
+        jingled=!jingled;
         tile.invertNeighborsJingled();
     }
     

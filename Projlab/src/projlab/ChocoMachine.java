@@ -16,10 +16,11 @@ public class ChocoMachine implements Element, Steppable{
     private Tile tile;
     
     //True, ha a csokiautomata sípolt
-    private boolean piped;
+    private boolean piped = false;
     
     //Meghívja a csempére azt a függvényt, amely invertálja a szomszédos csempék piped változóját.
     void invertPiped() {
+        piped=!piped;
         tile.invertNeighborsPiped();
     }
     
