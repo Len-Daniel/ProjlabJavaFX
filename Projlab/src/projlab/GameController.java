@@ -171,7 +171,19 @@ public class GameController implements Initializable {
             line = pbr.readLine();
             while(line != null){
                 String[] names = line.split(",");
-                if (names.length < 3)
+                if(names[1].equals("orangutan")) {
+                    if(o1==null) {
+                        o1 = new Orangutan();
+                        tiles.get(names[0]).setElement(o1);
+                        o1.setTile(tiles.get(names[0]));
+                    }
+                    else {
+                        o2 = new Orangutan();
+                        tiles.get(names[0]).setElement(o2);
+                        o2.setTile(tiles.get(names[0]));
+                    }
+                }
+                else if (names.length < 3)
                     tiles.get(names[0]).setElement(type(names[1]));
                 else
                     tiles.get(names[0]).setElement(new Exit(tiles.get(names[2])));
