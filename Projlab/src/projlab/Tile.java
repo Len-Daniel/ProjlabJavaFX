@@ -123,7 +123,6 @@ public class Tile {
         
         public void addNeighbor(Tile t){
             if(neighbors.contains(t)) return;
-            t.getNeighbors().add(this);
             neighbors.add(t);
         }
         
