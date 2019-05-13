@@ -238,21 +238,21 @@ public class GameController implements Initializable {
                     }
                     break;
                 case LEFT:
-                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(false);
+                    texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
                     selectedTileO2 = o2.getTile().getLeftNeighborOf(selectedTileO2);
-                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(true);
+                    texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                     break;
                 case RIGHT:
-                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(false);
+                    texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
                     selectedTileO2 = o2.getTile().getLeftNeighborOf(selectedTileO2);
-                    texts.get(getKey(tiles, selectedTileO2)).setUnderline(true);
+                    texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                     break;
                 case ENTER:
                     Tile previousTileo2 = o2.getTile();
                     o2.move(o2.getTile().getNeighborIndex(selectedTileO2));
                     Tile newTileo2 = o2.getTile();
                     if(previousTileo2 != newTileo2){
-                        texts.get(getKey(tiles, selectedTileO2)).setUnderline(false);
+                        texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
                         texts.get(getKey(tiles, newTileo2)).setText("o2");
                         if(o2.getHoldsPanda() == null){
                             texts.get(getKey(tiles, previousTileo2)).setText("");
@@ -268,7 +268,7 @@ public class GameController implements Initializable {
                             }
                         }
                         selectedTileO1 = o1.getTile().getNeighbor(0);
-                        texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
+                        texts.get(getKey(tiles, selectedTileO1)).setStrikethrough(true);
                     }
                     break;
                 case ESCAPE:
