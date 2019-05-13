@@ -56,6 +56,11 @@ public class GameController implements Initializable {
     @FXML
     private Text pl2Text;
 
+    private Map<String, Panda> pandas = new HashMap<String, Panda>();  
+    private Map<String, Cupboard> cupboards = new HashMap<String, Cupboard>();
+    private Map<String, GameMachine> gamemachines = new HashMap<String, GameMachine>();
+    private Map<String, ChocoMachine> chocomachines = new HashMap<String, ChocoMachine>(); 
+    private Map<String, Armchair> armchairs = new HashMap<String, Armchair>(); 
     
     private TreeMap<String, Tile> tiles = new TreeMap<String, Tile>();
     private Map<String, Text> texts = new HashMap<String, Text>();
@@ -84,28 +89,51 @@ public class GameController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {}  
     
     public Object type(String s){
+        int i = 0; 
         switch(s){
             case "jpanda":
+                JingleFearPanda jfpanda = new JingleFearPanda();
+                pandas.put(isIn(pandas, "JFP", i), jfpanda);
                 return new JingleFearPanda();
             case "ppanda":
+                PipingFearPanda pfpanda = new PipingFearPanda(); 
+                pandas.put(isIn(pandas, "PFP", i), pfpanda);
                 return new PipingFearPanda(); 
             case "spanda":
+                SleepyPanda spanda = new SleepyPanda(); 
+                pandas.put(isIn(pandas, "SP", i), spanda);
                 return new SleepyPanda(); 
             case "orangutan":
                 return new Orangutan();
             case "cupboard":
+                Cupboard cupboard = new Cupboard(); 
+                cupboards.put(isIn(cupboards, "CB", i), cupboard); 
                 return new Cupboard();
             case "gamemachine":
+                GameMachine gamemachine = new GameMachine(); 
+                gamemachines.put(isIn(gamemachines, "GM", i), gamemachine); 
                 return new GameMachine();
             case "chocomachine":
+                ChocoMachine chocomachine = new ChocoMachine(); 
+                chocomachines.put(isIn(chocomachines, "CM", i), chocomachine); 
                 return new ChocoMachine(); 
             case "armchair":
+                Armchair armchair = new Armchair(); 
+                armchairs.put(isIn(armchairs, "AR", i), armchair);
                 return new Armchair();
             case "exit":
                 return new Exit();
             default:
                 return null;
         }
+    }
+    
+    public String isIn(Map<String, ?> m, String s, int i){
+        if (m.containsKey(s+i)){
+            i++;
+            isIn(m, s+i, i);
+        }
+        return s+1;
     }
     
     //Ide kéne a pálya felépítési, az elemek inicializálása.
