@@ -72,14 +72,40 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {}  
     
+    public Object type(String s){
+        switch(s){
+            case "jpanda":
+                return new JingleFearPanda();
+            case "ppanda":
+                return new PipingFearPanda(); 
+            case "spanda":
+                return new SleepyPanda(); 
+            case "orangutan":
+                return new Orangutan();
+            case "cupboard":
+                return new Cupboard();
+            case "gamemachine":
+                return new GameMachine();
+            case "chocomachine":
+                return new ChocoMachine(); 
+            case "armchair":
+                return new Armchair();
+            case "exit":
+                return new Exit();
+            default:
+                return null;
+        }
+    }
+    
     //Ide kéne a pálya felépítési, az elemek inicializálása.
     public void createMap(){
         try(BufferedReader nbr = new BufferedReader(new FileReader("TileNames.txt"));
-            BufferedReader cbr = new BufferedReader(new FileReader("TileConnect.txt"));)
+            BufferedReader cbr = new BufferedReader(new FileReader("TileConnect.txt"));
+            BufferedReader pbr = new BufferedReader(new FileReader("Placing.txt"));)
         {
             String line = nbr.readLine();
             while(line != null){
-                String[] tile = line.split(" ");
+                String[] tile = line.split(",");
                 if(tile[0].equals("B")) tiles.put(tile[1], new BreakableTile());
                 else if (tile[0].equals("T")) tiles.put(tile[1], new Tile());
                 line = nbr.readLine();
@@ -87,11 +113,20 @@ public class GameController implements Initializable {
             
             line = cbr.readLine();
             while(line != null){
-                String[] names = line.split(" ");
+                String[] names = line.split(",");
                 tiles.get(names[0]).addNeighbor(tiles.get(names[2]));
                 line = cbr.readLine();
             }
             
+            line = pbr.readLine();
+            while(line != null){
+                String[] names = line.split(",");
+                if (names.length < 3)
+                    tiles.get(names[0].substring(1, names[0].length())).setElement(type(names[1]));
+                else 
+                    tiles.get(names[0].substring(1, names[0].length())).setElement(new Exit(tiles.get(names[2])));
+                line = pbr.readLine();
+            }
         }catch(IOException e){
             System.out.println(e.getMessage());
         }

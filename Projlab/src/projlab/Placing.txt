@@ -1,0 +1,13 @@
+Tile2,cupboard
+Tile6,orangutan
+Tile7,armchair
+Tile11,jpanda
+Tile23,chocomachine
+Tile26,orangutan
+Tile32,armchair
+Tile35,ppanda
+Tile29,spanda
+Tile30,spanda
+Tile19,cupboard
+Tile27,gamemachine
+Tile38,exit,Tile14

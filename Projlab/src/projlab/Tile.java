@@ -61,8 +61,11 @@ public class Tile {
 	}
         
         //element setter
-        public void setElement(Element lmnt){
-            element = lmnt;
+        public void setElement(Object lmnt){
+            if (lmnt instanceof Moveable)
+                this.element = (Element) lmnt;
+            else
+                this.element = (Element) lmnt;
         }
 
 	/**

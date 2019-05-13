@@ -28,6 +28,10 @@ public class Exit implements Element {
         return entrance;
     }
     
+    public void setEntrance(Tile t){
+        this.entrance = t; 
+    }
+    
     //Lekezeli azt a szituációt, amikor orangután ütközik a kijáratba.
     @Override
     public void hitBy(Orangutan o) {
