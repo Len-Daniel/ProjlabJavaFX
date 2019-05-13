@@ -15,11 +15,23 @@ public class GameMachine implements Element, Steppable {
     //Tárolja, hogy a játékgép melyik csempén van.
     private Tile tile;
     
+    //True, ha a játékgép csilingelt
+    private boolean jingled;
+ 
     //Meghívja a csempére azt a függvényt, amely invertálja a szomszédos csempék jingled változóját.
     void invertJingled() {
         tile.invertNeighborsJingled();
     }
     
+    /**
+    * 
+    * @return 
+    * Visszatért a jingled attribútum értékével.
+    */
+    public boolean getJingled() {
+		      return this.jingled;
+    }
+ 
     //Véletlenszerűen meghívja az invertJingled() függvényt.
     @Override
     public void step() {
@@ -43,5 +55,9 @@ public class GameMachine implements Element, Steppable {
     //Beállítja a tile attribútumot az argumentumként kapott tl-re.
     public void setTile(Tile tl){
         tile = tl;
+    }
+ 
+    public Tile getTile(){
+        return tile;
     }
 }
