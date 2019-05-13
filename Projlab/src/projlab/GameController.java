@@ -128,7 +128,7 @@ public class GameController implements Initializable {
                 line = tbr.readLine();
             }
             
-            /*line = pbr.readLine();
+            line = pbr.readLine();
             while(line != null){
                 String[] names = line.split(",");
                 if (names.length < 3)
@@ -136,7 +136,7 @@ public class GameController implements Initializable {
                 else
                     tiles.get(names[0]).setElement(new Exit(tiles.get(names[2])));
                 line = pbr.readLine();
-            }*/
+            }
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
