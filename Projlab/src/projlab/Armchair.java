@@ -33,7 +33,9 @@ public class Armchair implements Element, Steppable{
      */
     public void drop() {
             panda.setStatus(true);
+            System.out.println("kidobtam");
             tile.placeMoveableOnNeighbor(panda);
+            panda=null;
     }
 
     /**
