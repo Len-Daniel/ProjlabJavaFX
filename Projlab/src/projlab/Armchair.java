@@ -37,16 +37,19 @@ public class Armchair implements Element, Steppable{
     }
 
     /**
-     * Ez a metódus beleteszi a SleepyPandát az Armchairbe, amelyik bele szeretne menni.
+     * Ez a metódus beleteszi a SleepyPandát az 
+     
+     be, amelyik bele szeretne menni.
      * 
      * @param sp Az a panda amelyik aludni szeretne.
      */
     public void gyereRam(SleepyPanda sp) {
+        sp.breakOut();
         if(panda == null){
-            sp.breakOut();
             countToDrop = 10;
             Tile tmp = new Tile();
             sp.setTile(tmp);
+            tmp.setElement(sp);
             panda = sp;
             System.out.println("SleepyPanda elaludt.");
         }
