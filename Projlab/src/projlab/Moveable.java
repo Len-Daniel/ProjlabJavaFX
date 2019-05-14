@@ -57,7 +57,7 @@ public abstract class Moveable implements Element {
 	 */
 	int count(int c) {
 		if(holdsPanda == null) return c + 1;
-                else return holdsPanda.count(c + 1);
+                else return holdsPanda.count(c+1);
 	}
 
 	// Visszaadja a tile attribútumot.

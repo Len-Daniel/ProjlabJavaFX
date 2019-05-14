@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
  */
 public class GameController implements Initializable {
     
-    private double cnt=0.015;
+    private double cnt=0.01;
     
     private double t = 0;
     
@@ -241,7 +241,6 @@ public class GameController implements Initializable {
             }
                 cupboards.get("CP1").setPair(cupboards.get("CP2"));
                 cupboards.get("CP2").setPair(cupboards.get("CP1"));
-            System.out.println("asd");
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
@@ -304,7 +303,7 @@ public class GameController implements Initializable {
         pl1Text.setVisible(true);
         pl2Text.setVisible(true);
         player1Points.setVisible(true);
-        player1Points.setVisible(true);
+        player2Points.setVisible(true);
         createMap();
         selectedTileO1 = o1.getTile().getNeighbor(0);
         texts.get(getKey(tiles, o1.getTile())).setText("O1");
@@ -319,6 +318,9 @@ public class GameController implements Initializable {
         
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
+                case W:
+                    o1.letOff();
+                    break;
                 case A:
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "*selected*")
@@ -340,6 +342,13 @@ public class GameController implements Initializable {
                     break;    
                 case SPACE:
                     Tile previousTileo1 = o1.getTile();
+                    if(o1.getHoldsPanda() != null){
+                        Panda heldo1 = o1.getHoldsPanda();
+                        while(heldo1 != null){
+                            texts.get(getKey(tiles, heldo1.getTile())).setText("");
+                            heldo1 = heldo1.getHoldsPanda();
+                        }
+                    }
                     o1.move(o1.getTile().getNeighborIndex(selectedTileO1));
                     Tile newTileo1 = o1.getTile();
                     if(previousTileo1 != newTileo1){
@@ -351,10 +360,7 @@ public class GameController implements Initializable {
                         else{
                             Panda heldo1 = o1.getHoldsPanda();
                             while(heldo1 != null){
-                                newTileo1 = previousTileo1;
-                                previousTileo1 = heldo1.getTile();
-                                texts.get(getKey(tiles, newTileo1)).setText(getKey(pandas, heldo1));
-                                texts.get(getKey(tiles, previousTileo1)).setText("");
+                                texts.get(getKey(tiles, heldo1.getTile())).setText(getKey(pandas, heldo1));
                                 heldo1 = heldo1.getHoldsPanda();
                             }
                         }
@@ -363,6 +369,18 @@ public class GameController implements Initializable {
                             texts.get(getKey(tiles, selectedTileO1)).setText("*selected*");
                         texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     }
+                    if(o1.getHoldsPanda() != null && previousTileo1 == newTileo1){
+                        Panda heldo1 = o1.getHoldsPanda();
+                        while(heldo1 != null){
+                            texts.get(getKey(tiles, heldo1.getTile())).setText(getKey(pandas, heldo1));
+                            heldo1 = heldo1.getHoldsPanda();
+                        }
+                    }
+                    if(Integer.parseInt(player1Points.getText()) != o1.getPoints())
+                        player1Points.setText(Integer.toString(o1.getPoints()));
+                    break;
+                case UP:
+                    o2.letOff();
                     break;
                 case LEFT:
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
@@ -384,6 +402,13 @@ public class GameController implements Initializable {
                     break;
                 case ENTER:
                     Tile previousTileo2 = o2.getTile();
+                    if(o2.getHoldsPanda() != null){
+                        Panda heldo2 = o2.getHoldsPanda();
+                        while(heldo2 != null){
+                            texts.get(getKey(tiles, heldo2.getTile())).setText("");
+                            heldo2 = heldo2.getHoldsPanda();
+                        }
+                    }
                     o2.move(o2.getTile().getNeighborIndex(selectedTileO2));
                     Tile newTileo2 = o2.getTile();
                     if(previousTileo2 != newTileo2){
@@ -395,10 +420,7 @@ public class GameController implements Initializable {
                         else{
                             Panda heldo2 = o2.getHoldsPanda();
                             while(heldo2 != null){
-                                newTileo2 = previousTileo2;
-                                previousTileo2 = heldo2.getTile();
-                                texts.get(getKey(tiles, newTileo2)).setText(getKey(pandas, heldo2));
-                                texts.get(getKey(tiles, previousTileo2)).setText("");
+                                texts.get(getKey(tiles, heldo2.getTile())).setText(getKey(pandas, heldo2));
                                 heldo2 = heldo2.getHoldsPanda();
                             }
                         }
@@ -406,6 +428,16 @@ public class GameController implements Initializable {
                         if(texts.get(getKey(tiles, selectedTileO2)).getText() == "")
                             texts.get(getKey(tiles, selectedTileO2)).setText("*selected*");
                         texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
+                    }
+                    if(o2.getHoldsPanda() != null && previousTileo2 == newTileo2){
+                        Panda heldo2 = o2.getHoldsPanda();
+                        while(heldo2 != null){
+                            texts.get(getKey(tiles, heldo2.getTile())).setText(getKey(pandas, heldo2));
+                            heldo2 = heldo2.getHoldsPanda();
+                        }
+                    }
+                    if(Integer.parseInt(player2Points.getText()) != o2.getPoints()){
+                        player2Points.setText(Integer.toString(o2.getPoints()));
                     }
                     break;
                 case ESCAPE:
@@ -415,7 +447,7 @@ public class GameController implements Initializable {
         });
         
         //Elindítja a timert, megy az update loop
-        timer.start();
+        //timer.start();
     }
     
 }

@@ -24,7 +24,8 @@ public abstract class Panda extends Moveable implements Steppable{
                 getHoldsPanda().breakOut();
             }
             heldByMoveable.setHoldsPanda(null);    //az előttünk lévő elengedi a mi kezünket
-            setHeldByMoveable(null);    //elengedjük az előttünk lévő kezét
+            heldByMoveable = null;//elengedjük az előttünk lévő kezét
+            free = true;
 	}
 
 	/**
@@ -74,8 +75,10 @@ public abstract class Panda extends Moveable implements Steppable{
             if(getHoldsPanda() != null) {   //végigmegyünk az egész láncon, végignövelve az i értékét
                 getHoldsPanda().ledOut();
             }
-            getTile().remove();   //eltávolítjuk a csempéről a pandát
-            Controller.removePanda(this);   //majd a játékból is
+            getTile().remove();//eltávolítjuk a csempéről a pandát
+            this.setTile(null);
+            heldByMoveable.setHoldsPanda(null);    //az előttünk lévő elengedi a mi kezünket
+            setHeldByMoveable(null);    //elengedjük az előttünk lévő kezét
             System.out.println("Panda kivezetve.");
 	}
 
@@ -92,7 +95,7 @@ public abstract class Panda extends Moveable implements Steppable{
         public void fall() {
             if(free==false) { breakOut();}   //ha a pandát vezették, akkor felbomlik a mögötte lévő sor
             getTile().remove();   //eltávolítjuk a csempéről
-            Controller.removePanda(this);   //majd a játékból is
+            this.setTile(null);
             System.out.println("A Panda leesett");
 	}
         /**

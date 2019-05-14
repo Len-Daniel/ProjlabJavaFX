@@ -7,7 +7,7 @@ public class Orangutan extends Moveable{
  
     private int points = 0;
     private int cancatch = 0;
-    private List<Panda> pandas = new ArrayList<Panda>();
+    //private List<Panda> pandas = new ArrayList<Panda>();
 
 	/**
 	 * 
@@ -18,6 +18,7 @@ public class Orangutan extends Moveable{
 		points += p;
 		System.out.println(p + " pont hozzáadva, jelenlegi pontok: " + points);
 	}
+        public int getPoints() {return points;}
 
         /**
          * Ez a metódus kivezeti azokat a pandákat akiket az orangután 
@@ -27,12 +28,12 @@ public class Orangutan extends Moveable{
 		if(holdsPanda != null){
                     addPoints(holdsPanda.count(0));
                     holdsPanda.ledOut();
+                    holdsPanda=null;
                 }
 	}
         
         @Override
 	public void fall() {
-            Controller.endGame();
 	    System.out.println("Orangután leesett.");
 	}
 
@@ -43,12 +44,12 @@ public class Orangutan extends Moveable{
 	 */
 	public void add(Panda pnd, Tile t) 
         {
-            if (pandas.size() != 0){
-                pnd.setHoldsPanda(pandas.get(pandas.size() - 1));
+            if (this.getHoldsPanda()!=null){
+                this.getHoldsPanda().setHeldByMoveable(pnd);
+                pnd.setHoldsPanda(this.getHoldsPanda());
             }
             this.setTile(t);
             setHoldsPanda(pnd);
-            pandas.add(pnd);
 	}
         
         //Azt az eseményt kezeli le, amikor orangután ütközik valami mással
@@ -58,7 +59,8 @@ public class Orangutan extends Moveable{
     }
 
     public void letOff(){
-	    pandas.get(0).breakOut();
+	    this.getHoldsPanda().breakOut();
+            System.out.println("Pandak elengedve");
     }
 
     @Override

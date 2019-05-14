@@ -8,6 +8,6 @@ Tile32,armchair
 Tile35,ppanda
 Tile29,spanda
 Tile30,spanda
-Tile19,cupboard
-Tile27,gamemachine
+Tile12,cupboard
+Tile17,gamemachine
 Tile38,exit,Tile14
