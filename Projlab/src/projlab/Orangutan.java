@@ -59,8 +59,10 @@ public class Orangutan extends Moveable{
     }
 
     public void letOff(){
-	    this.getHoldsPanda().breakOut();
-            System.out.println("Pandak elengedve");
+            if(holdsPanda != null){
+             holdsPanda.breakOut();
+             System.out.println("Pandak elengedve");
+            }
     }
 
     @Override
