@@ -35,6 +35,15 @@ public class Tile {
          */
         Tile(Element e){
             this.element = e; 
+            neighbors();
+        }
+        
+        void neighbors(){
+            for (Tile t : neighbors){
+                if (t.element instanceof Armchair){
+                    neighborChairs.add((Armchair) t.element);
+                }
+            }
         }
         
         /**
@@ -75,7 +84,7 @@ public class Tile {
          * moveable, vagy nem.
 	 */
 	public void accept(Moveable mvbl) {
-            if (element == null){
+             if (element == null){
                 setMoveable(mvbl);
                 mvbl.leave();
                 mvbl.setTile(this);
@@ -140,6 +149,7 @@ public class Tile {
 	public Armchair getFreeNeighborChair() {
             for (Armchair a : neighborChairs){
                 if(a.isFree()){
+                    System.out.println("Találtam egy üres széket");
                     return a;
                 }
             }

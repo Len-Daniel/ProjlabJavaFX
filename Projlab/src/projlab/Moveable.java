@@ -3,7 +3,7 @@ package projlab;
 
 public abstract class Moveable implements Element {
  
-    Panda holdsPanda;
+    protected Panda holdsPanda;
     private Tile tile;
     /**
 	 * 
@@ -48,6 +48,10 @@ public abstract class Moveable implements Element {
 	void setHoldsPanda(Panda pnd) {
 		holdsPanda = pnd;
 	}
+        
+        public void setHoldsPandaNull(){
+            holdsPanda = null;
+        }
 
 	/**
 	 * 

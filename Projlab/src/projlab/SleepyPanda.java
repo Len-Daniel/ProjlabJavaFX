@@ -62,8 +62,12 @@ public class SleepyPanda extends Panda{
         //megnézi, hogy van-e szomszédos és üres fotel
         public void checkChair() {
             if(getTile().getFreeNeighborChair()!=null && !immune) {   //ha van szomszédos üres fotel és nem immunis a panda, akkor beleül
-                getTile().getFreeNeighborChair().gyereRam(this);
-                setFree(false);
+                Armchair arm = getTile().getFreeNeighborChair();
+                if (arm != null){
+                    arm.gyereRam(this);
+                    setFree(false);
+                }
+                System.out.println("Beleül");
             }
         }
 }

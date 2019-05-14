@@ -23,7 +23,7 @@ public abstract class Panda extends Moveable implements Steppable{
             if(getHoldsPanda()!=null) {   //megkeressük azt a pandát, aki már nem fogja senki kezét
                 getHoldsPanda().breakOut();
             }
-            heldByMoveable.setHoldsPanda(null);    //az előttünk lévő elengedi a mi kezünket
+            heldByMoveable.holdsPanda = null;    //az előttünk lévő elengedi a mi kezünket
             heldByMoveable = null;//elengedjük az előttünk lévő kezét
             free = true;
 	}
@@ -34,15 +34,13 @@ public abstract class Panda extends Moveable implements Steppable{
 	 */
         @Override
 	public void hitBy(Orangutan o) {
-            if(free==true) 
-            {
+            if(free==true) {
                 setFree(false);
-                heldByMoveable=o;
+                heldByMoveable = o;
                 Tile oldTile = this.getTile();
                 this.setTile(o.getTile());
                 o.add(this, oldTile);
             }
-            
 	}
         
         @Override
