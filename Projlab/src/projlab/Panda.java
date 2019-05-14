@@ -23,7 +23,7 @@ public abstract class Panda extends Moveable implements Steppable{
             if(getHoldsPanda()!=null) {   //megkeressük azt a pandát, aki már nem fogja senki kezét
                 getHoldsPanda().breakOut();
             }
-            heldByMoveable.holdsPanda = null;    //az előttünk lévő elengedi a mi kezünket
+            if (heldByMoveable!=null) heldByMoveable.holdsPanda = null;    //az előttünk lévő elengedi a mi kezünket
             heldByMoveable = null;//elengedjük az előttünk lévő kezét
             free = true;
 	}
