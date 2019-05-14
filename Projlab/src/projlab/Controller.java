@@ -59,35 +59,61 @@ public class Controller {
         }
         System.out.println("Game Over!");
     }
-
-    //Lezárja a játékot
+    /**
+     * Játék vége
+     */
     public static void endGame() {
         endGame = true;
     }
     
-    
-    //visszaadja az összes csempét
+    /**
+     * Összes csempe visszaadása
+     * @return 
+     */
     public Map<String, Tile> getTiles(){
         return tiles;
     }
 
-    //elvesz egy pandát a játékból
+    /**
+     * Panda elvétele
+     * @param pnd 
+     */
     public static void removePanda(Panda pnd) {
         pandas.remove(pnd);
     }
     
+    /**
+     * Orángután hozzáadása
+     * @param o
+     * @param name 
+     */
     public void add(Orangutan o, String name){
         orangutans.put(name, o);
     }
     
+    /**
+     * Panda hozzáadása
+     * @param p
+     * @param name 
+     */
     public void add(Panda p, String name){
         pandas.put(name, p);
     }
 
+    /**
+     * Elem hozzáadása
+     * @param e
+     * @param name 
+     */
     public void add(Element e, String name){
         elements.put(name, e);
     }
-
+    
+    /**
+     * Tile hozzáadása
+     * @param t
+     * @param name 
+     */
     public void add(Tile t, String name){
         tiles.put(name, t);
     }
@@ -134,18 +160,20 @@ public class Controller {
         }
     }
 
-    /**
-     * Ellehet helyezni egy objektumot a csempĂ©n
-     *
-     * @param first Az jelzi, hogy mit akarunk elhelyezni
-     * @param second    Hogy min akarjuk elhelyezni
-     */
-    
-    
+   /**
+    * Mozgó elem elhelyezése a csempén
+    * @param p
+    * @param tile 
+    */
     public void place(Moveable p, Tile tile){
         tile.setMoveable(p);
     }
     
+    /**
+     * Elem elhelyezése a csempén 
+     * @param p
+     * @param tile 
+     */
     public void place(Element p, Tile tile){
         tile.setElement(p);
     }
