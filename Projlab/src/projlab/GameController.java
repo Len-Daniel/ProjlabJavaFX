@@ -256,13 +256,17 @@ public class GameController implements Initializable {
         for (String key : pandas.keySet())
         {
             tmp = getKey(tiles, pandas.get(key).getTile());
-            System.out.println(tmp);
-            texts.get(tmp).setText("");
-            pandas.get(key).step();
-            tmp = getKey(tiles, pandas.get(key).getTile());
-            txt = texts.get(tmp);
-            str = getKey(pandas, pandas.get(key));
-            txt.setText(str);
+            if(tmp != null){
+                System.out.println(tmp);
+                texts.get(tmp).setText("");
+                pandas.get(key).step();
+                tmp = getKey(tiles, pandas.get(key).getTile());
+                txt = texts.get(tmp);
+                str = getKey(pandas, pandas.get(key));
+                txt.setText(str);
+            } else {
+                pandas.get(key).step();
+            }
         }
         
         for (String key : gamemachines.keySet())
@@ -295,29 +299,6 @@ public class GameController implements Initializable {
         {
             armchairs.get(key).step();
         }
-        
-        if(pandas.size() == 0){
-            gameOver();
-        }
-    }
-    
-    //Játék vége, pl. megalt az összes panda, csak egy orangután maradt, vagy az összes panda ki lett vezetve
-    public void gameOver(){
-        timer.stop();
-        if(o1.getTile() == null){
-            gameOverText.setText("1. játékos leesett, 2. játékos a győztes!");
-        }
-        else if(o2.getTile() == null){
-            gameOverText.setText("2. játékos leesett, 1. játékos a győztes!");
-        }
-        else if(o1.getPoints() == o2.getPoints()){
-            gameOverText.setText("Döntetlen!");
-        }
-        else if(o1.getPoints() > o2.getPoints()){
-            gameOverText.setText("1. játékos a győztes!");
-        }
-        else
-            gameOverText.setText("2. játékos a győztes!");
     }
     
     //Ez fut le, ha megnyomod a bStart gombot
