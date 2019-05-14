@@ -68,7 +68,7 @@ public class Orangutan extends Moveable{
 
     @Override
     public void hitBy(Orangutan o) {
-        if(o.getCanCatch()==0)
+        if(o.getCanCatch()==0 && o.getHoldsPanda()==null && this.holdsPanda!=null)
             o.steal(this);
     }
 
@@ -80,7 +80,14 @@ public class Orangutan extends Moveable{
      * @param o 
      */
     public void steal(Orangutan o){
-        
+        Tile tmp = o.getTile();
+        o.setTile(this.getTile());
+        this.setTile(tmp);
+        o.getTile().setElement(o);
+        this.getTile().setElement(this);
+        this.setHoldsPanda(o.getHoldsPanda());
+        this.getHoldsPanda().setHeldByMoveable(this);
+        o.setHoldsPanda(null);
     }
     
     @Override
