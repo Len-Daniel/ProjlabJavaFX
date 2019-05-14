@@ -41,13 +41,14 @@ public class Orangutan extends Moveable{
 	 * @param pnd Az a panda, amelyik most fog sorba fűződni.
          * Ez a metódus az orangután sorához hozzáadja a paraméterben megkapott pnadát.
 	 */
-	public void add(Panda pnd) {
-        if (pandas.size() == 0){
+	public void add(Panda pnd, Tile t) 
+        {
+            if (pandas.size() != 0){
+                pnd.setHoldsPanda(pandas.get(pandas.size() - 1));
+            }
+            this.setTile(t);
+            setHoldsPanda(pnd);
             pandas.add(pnd);
-        } else {
-            pnd.setHoldsPanda(pandas.get(pandas.size() - 1));
-            pandas.add(pnd);
-        }
 	}
         
         //Azt az eseményt kezeli le, amikor orangután ütközik valami mással

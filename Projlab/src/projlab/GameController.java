@@ -415,7 +415,7 @@ public class GameController implements Initializable {
         });
         
         //Elindítja a timert, megy az update loop
-        //timer.start();
+        timer.start();
     }
     
 }

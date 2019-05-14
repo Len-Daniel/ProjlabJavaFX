@@ -33,8 +33,14 @@ public abstract class Panda extends Moveable implements Steppable{
 	 */
         @Override
 	public void hitBy(Orangutan o) {
-            o.add(this);
-            setFree(false);
+            if(free==true) 
+            {
+                setFree(false);
+                heldByMoveable=o;
+                Tile oldTile = this.getTile();
+                this.setTile(o.getTile());
+                o.add(this, oldTile);
+            }
             
 	}
         
