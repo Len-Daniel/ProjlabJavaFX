@@ -377,6 +377,7 @@ public class GameController implements Initializable {
                         }
                     }
                     if(Integer.parseInt(player1Points.getText()) != o1.getPoints())
+                        pandas.entrySet().removeIf(p -> p.getValue().getTile() == null);
                         player1Points.setText(Integer.toString(o1.getPoints()));
                     break;
                 case UP:
@@ -437,6 +438,7 @@ public class GameController implements Initializable {
                         }
                     }
                     if(Integer.parseInt(player2Points.getText()) != o2.getPoints()){
+                        pandas.entrySet().removeIf(p -> p.getValue().getTile() == null);
                         player2Points.setText(Integer.toString(o2.getPoints()));
                     }
                     break;
