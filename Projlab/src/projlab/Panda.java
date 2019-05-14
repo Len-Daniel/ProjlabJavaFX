@@ -18,12 +18,14 @@ public abstract class Panda extends Moveable implements Steppable{
     private Moveable heldByMoveable;
     private boolean free = true;
 
-	// a lánc felbontásához használt metódus
+    public Moveable getheldby() {return heldByMoveable;}
+
+// a lánc felbontásához használt metódus
         public void breakOut() {
             if(getHoldsPanda()!=null) {   //megkeressük azt a pandát, aki már nem fogja senki kezét
                 getHoldsPanda().breakOut();
             }
-            if (heldByMoveable!=null) heldByMoveable.holdsPanda = null;    //az előttünk lévő elengedi a mi kezünket
+            heldByMoveable.holdsPanda = null;    //az előttünk lévő elengedi a mi kezünket
             heldByMoveable = null;//elengedjük az előttünk lévő kezét
             free = true;
 	}
