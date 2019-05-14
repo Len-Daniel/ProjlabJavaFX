@@ -43,6 +43,7 @@ public class Armchair implements Element, Steppable{
      */
     public void gyereRam(SleepyPanda sp) {
         if(panda == null){
+            sp.breakOut();
             countToDrop = 10;
             Tile tmp = new Tile();
             sp.setTile(tmp);
