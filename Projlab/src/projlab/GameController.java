@@ -301,6 +301,24 @@ public class GameController implements Initializable {
         }
     }
     
+    public void gameOver(){
+        timer.stop();
+        if(o1.getTile() == null){
+            gameOverText.setText("1. játékos leesett, 2. játékos a győztes!");
+        }
+        else if(o2.getTile() == null){
+            gameOverText.setText("2. játékos leesett, 1. játékos a győztes!");
+        }
+        else if(o1.getPoints() == o2.getPoints()){
+            gameOverText.setText("Döntetlen!");
+        }
+        else if(o1.getPoints() > o2.getPoints()){
+            gameOverText.setText("1. játékos a győztes!");
+        }
+        else
+            gameOverText.setText("2. játékos a győztes!");
+    }
+    
     //Ez fut le, ha megnyomod a bStart gombot
     @FXML
     private void startGame(ActionEvent event) throws IOException {
