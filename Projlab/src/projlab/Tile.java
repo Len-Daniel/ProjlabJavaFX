@@ -15,16 +15,16 @@ import java.util.List;
 public class Tile {
     
     //Csempe szomszédai, melyek szintén csempék 
-    private ArrayList<Tile> neighbors = new ArrayList<Tile>();
+    protected ArrayList<Tile> neighbors = new ArrayList<Tile>();
     
     //Szomszédos fotelek tárolása
-    private ArrayList<Armchair> neighborChairs = new ArrayList<Armchair>();
+    protected ArrayList<Armchair> neighborChairs = new ArrayList<Armchair>();
     
     //True, ha az előző körben egy szomszédos csokiautomata sípolt
-    private boolean piped;
+    protected boolean piped;
     
     //True, ha az előző körben egy szomszédos játékgép csilingelt
-    private boolean jingled;
+    protected boolean jingled;
     
     //Az adott csempén lévő elem 
     Element element;

@@ -8,7 +8,10 @@ package projlab;
 import java.io.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -192,8 +195,13 @@ public class GameController implements Initializable {
             }
             line = tbr.readLine();
             int idx = 1;
+            List<Integer> bt = new ArrayList<Integer>();
+            Integer[] data = {3,9,18,24,34};
+            bt = Arrays.asList(data);
             while(line!=null) {
                 String name = "Tile"+Integer.toString(idx);
+                if (bt.contains(idx))
+                    name = "BTile"+Integer.toString(idx);
                 String[] koord = line.split(" ");
                 texts.put(name, new Text(Integer.parseInt(koord[0]), Integer.parseInt(koord[1]),""));
                 pGame.getChildren().add(texts.get(name));
@@ -325,6 +333,7 @@ public class GameController implements Initializable {
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "*selected*")
                         texts.get(getKey(tiles, selectedTileO1)).setText("");
                     selectedTileO1 = o1.getTile().getRightNeighborOf(selectedTileO1);
+                    Text ta = texts.get(getKey(tiles, selectedTileO1));
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
                         texts.get(getKey(tiles, selectedTileO1)).setText("*selected*");
