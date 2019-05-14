@@ -33,6 +33,7 @@ public class Armchair implements Element, Steppable{
      */
     public void drop() {
             panda.setStatus(true);
+            panda.setFree(true);
             System.out.println("kidobtam");
             tile.placeMoveableOnNeighbor(panda);
             panda=null;
@@ -46,10 +47,11 @@ public class Armchair implements Element, Steppable{
      * @param sp Az a panda amelyik aludni szeretne.
      */
     public void gyereRam(SleepyPanda sp) {
-        sp.breakOut();
+        if(sp.getheldby()!=null)sp.breakOut();
         if(panda == null){
-            countToDrop = 10;
+            countToDrop = 3;
             Tile tmp = new Tile();
+            sp.getTile().setElement(null);
             sp.setTile(tmp);
             tmp.setElement(sp);
             panda = sp;
@@ -80,4 +82,6 @@ public class Armchair implements Element, Steppable{
 
     @Override
     public void collideWith(Element e) { }
+    
+    public Tile getTile() {return tile;}
 }
