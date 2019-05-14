@@ -34,6 +34,7 @@ public class Orangutan extends Moveable{
         
         @Override
 	public void fall() {
+            this.setTile(null);
 	    System.out.println("Orangután leesett.");
 	}
 

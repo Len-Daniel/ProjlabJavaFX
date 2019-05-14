@@ -63,6 +63,8 @@ public class GameController implements Initializable {
     private Text pl1Text;
     @FXML
     private Text pl2Text;
+    @FXML
+    private Text gameOverText;
 
     private Map<String, Panda> pandas = new HashMap<String, Panda>();  
     private Map<String, Cupboard> cupboards = new HashMap<String, Cupboard>();
@@ -293,18 +295,43 @@ public class GameController implements Initializable {
         {
             armchairs.get(key).step();
         }
+        
+        if(pandas.size() == 0){
+            gameOver();
+        }
+    }
+    
+    //Játék vége, pl. megalt az összes panda, csak egy orangután maradt, vagy az összes panda ki lett vezetve
+    public void gameOver(){
+        timer.stop();
+        if(o1.getTile() == null){
+            gameOverText.setText("1. játékos leesett, 2. játékos a győztes!");
+        }
+        else if(o2.getTile() == null){
+            gameOverText.setText("2. játékos leesett, 1. játékos a győztes!");
+        }
+        else if(o1.getPoints() == o2.getPoints()){
+            gameOverText.setText("Döntetlen!");
+        }
+        else if(o1.getPoints() > o2.getPoints()){
+            gameOverText.setText("1. játékos a győztes!");
+        }
+        else
+            gameOverText.setText("2. játékos a győztes!");
     }
     
     //Ez fut le, ha megnyomod a bStart gombot
     @FXML
     private void startGame(ActionEvent event) throws IOException {
-        bStart.setVisible(false);
+        bStart.setVisible(false); //A pálya elemeit visible-re állítjuk
         mapPic.setVisible(true);
         pl1Text.setVisible(true);
         pl2Text.setVisible(true);
         player1Points.setVisible(true);
         player2Points.setVisible(true);
-        createMap();
+        createMap(); //A pála felépítése, változók inicializálása
+        
+        //A kiválasztott csempék kezdeti pozíciójának beállítása, grafikus megjelenítése
         selectedTileO1 = o1.getTile().getNeighbor(0);
         texts.get(getKey(tiles, o1.getTile())).setText("O1");
         if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
@@ -316,12 +343,13 @@ public class GameController implements Initializable {
             texts.get(getKey(tiles, selectedTileO2)).setText("*selected*");
         texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
         
+        //A játékosok inputjainek lekezelése
         pGame.getScene().setOnKeyPressed(e -> {
             switch (e.getCode()) {
-                case W:
+                case W: //1. játékos elengedi a pandáit
                     o1.letOff();
                     break;
-                case A:
+                case A: //1. játékos a jelenlegi kiválaszott csempének a baloldali szomszédját választja ki
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "*selected*")
                         texts.get(getKey(tiles, selectedTileO1)).setText("");
@@ -330,7 +358,7 @@ public class GameController implements Initializable {
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
                         texts.get(getKey(tiles, selectedTileO1)).setText("*selected*");
                     break;
-                case D:
+                case D: //1. játékos a jelenlegi kiválaszott csempének a jobb oldali szomszédját választja ki
                     texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "*selected*")
                         texts.get(getKey(tiles, selectedTileO1)).setText("");
@@ -340,7 +368,7 @@ public class GameController implements Initializable {
                     if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
                         texts.get(getKey(tiles, selectedTileO1)).setText("*selected*");
                     break;    
-                case SPACE:
+                case SPACE: //1. játékos megpróbál átmozogni a kiválasztott csempére
                     Tile previousTileo1 = o1.getTile();
                     if(o1.getHoldsPanda() != null){
                         Panda heldo1 = o1.getHoldsPanda();
@@ -350,8 +378,11 @@ public class GameController implements Initializable {
                         }
                     }
                     o1.move(o1.getTile().getNeighborIndex(selectedTileO1));
+                    if(o1.getTile() == null){
+                        gameOver();
+                    }
                     Tile newTileo1 = o1.getTile();
-                    if(previousTileo1 != newTileo1){
+                    if(previousTileo1 != newTileo1 && o1.getTile() != null){
                         texts.get(getKey(tiles, selectedTileO1)).setUnderline(false);
                         texts.get(getKey(tiles, newTileo1)).setText("O1");
                         if(o1.getHoldsPanda() == null){
@@ -369,21 +400,24 @@ public class GameController implements Initializable {
                             texts.get(getKey(tiles, selectedTileO1)).setText("*selected*");
                         texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                     }
-                    if(o1.getHoldsPanda() != null && previousTileo1 == newTileo1){
+                    if(o1.getHoldsPanda() != null && previousTileo1 == newTileo1 && o1.getTile() != null){
                         Panda heldo1 = o1.getHoldsPanda();
                         while(heldo1 != null){
                             texts.get(getKey(tiles, heldo1.getTile())).setText(getKey(pandas, heldo1));
                             heldo1 = heldo1.getHoldsPanda();
                         }
                     }
-                    if(Integer.parseInt(player1Points.getText()) != o1.getPoints())
+                    if(Integer.parseInt(player1Points.getText()) != o1.getPoints() && o1.getTile() != null){
                         pandas.entrySet().removeIf(p -> p.getValue().getTile() == null);
                         player1Points.setText(Integer.toString(o1.getPoints()));
+                        if(pandas.size() == 0)
+                            gameOver();
+                    }  
                     break;
-                case UP:
+                case UP: //2. játékos elengedi a pandáit
                     o2.letOff();
                     break;
-                case LEFT:
+                case LEFT: //2. játékos a jelenlegi kiválaszott csempének a baloldali szomszédját választja ki
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
                     if(texts.get(getKey(tiles, selectedTileO2)).getText() == "*selected*")
                         texts.get(getKey(tiles, selectedTileO2)).setText("");
@@ -392,7 +426,7 @@ public class GameController implements Initializable {
                     if(texts.get(getKey(tiles, selectedTileO2)).getText() == "")
                         texts.get(getKey(tiles, selectedTileO2)).setText("*selected*");
                     break;
-                case RIGHT:
+                case RIGHT: //2. játékos a jelenlegi kiválaszott csempének a jobboldali szomszédját választja ki
                     texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
                     if(texts.get(getKey(tiles, selectedTileO2)).getText() == "*selected*")
                         texts.get(getKey(tiles, selectedTileO2)).setText("");
@@ -401,7 +435,7 @@ public class GameController implements Initializable {
                     if(texts.get(getKey(tiles, selectedTileO2)).getText() == "")
                         texts.get(getKey(tiles, selectedTileO2)).setText("*selected*");
                     break;
-                case ENTER:
+                case ENTER: //2. játékos megpróbál átmozogni a kiválasztott csempére
                     Tile previousTileo2 = o2.getTile();
                     if(o2.getHoldsPanda() != null){
                         Panda heldo2 = o2.getHoldsPanda();
@@ -411,8 +445,11 @@ public class GameController implements Initializable {
                         }
                     }
                     o2.move(o2.getTile().getNeighborIndex(selectedTileO2));
+                    if(o2.getTile() == null){
+                        gameOver();
+                    }
                     Tile newTileo2 = o2.getTile();
-                    if(previousTileo2 != newTileo2){
+                    if(previousTileo2 != newTileo2 && o2.getTile() != null){
                         texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(false);
                         texts.get(getKey(tiles, newTileo2)).setText("O2");
                         if(o2.getHoldsPanda() == null){
@@ -430,16 +467,18 @@ public class GameController implements Initializable {
                             texts.get(getKey(tiles, selectedTileO2)).setText("*selected*");
                         texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                     }
-                    if(o2.getHoldsPanda() != null && previousTileo2 == newTileo2){
+                    if(o2.getHoldsPanda() != null && previousTileo2 == newTileo2 && o2.getTile() != null){
                         Panda heldo2 = o2.getHoldsPanda();
                         while(heldo2 != null){
                             texts.get(getKey(tiles, heldo2.getTile())).setText(getKey(pandas, heldo2));
                             heldo2 = heldo2.getHoldsPanda();
                         }
                     }
-                    if(Integer.parseInt(player2Points.getText()) != o2.getPoints()){
-                        pandas.entrySet().removeIf(p -> p.getValue().getTile() == null);
+                    if(Integer.parseInt(player2Points.getText()) != o2.getPoints() && o2.getTile() != null){
                         player2Points.setText(Integer.toString(o2.getPoints()));
+                        pandas.entrySet().removeIf(p -> p.getValue().getTile() == null);
+                        if(pandas.size() == 0)
+                            gameOver();
                     }
                     break;
                 case ESCAPE:
@@ -451,5 +490,4 @@ public class GameController implements Initializable {
         //Elindítja a timert, megy az update loop
         //timer.start();
     }
-    
 }
