@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
  */
 public class GameController implements Initializable {
     
-    private double cnt=0.01;
+    private double cnt=0.002;
     
     private double t = 0;
     
@@ -82,6 +82,7 @@ public class GameController implements Initializable {
             public void handle(long now){
                 t+=cnt;
                     if(t>1) {
+                        System.out.println("tick");
                         update();
                         t=0;
                     }
@@ -253,11 +254,25 @@ public class GameController implements Initializable {
         String str; 
         String tmp;
         Text txt;
+        
+        for (String key : armchairs.keySet())
+        {
+            armchairs.get(key).step();
+            tmp = getKey(tiles, armchairs.get(key).getTile());
+            txt = texts.get(tmp);
+            if (armchairs.get(key).isFree()==false){
+                txt.setFill(Color.YELLOW);
+            }
+            else{
+                txt.setFill(Color.BLACK);
+            }
+        }
+        
         for (String key : pandas.keySet())
         {
             tmp = getKey(tiles, pandas.get(key).getTile());
             if(tmp != null){
-                System.out.println(tmp);
+                //System.out.println(tmp);
                 texts.get(tmp).setText("");
                 pandas.get(key).step();
                 tmp = getKey(tiles, pandas.get(key).getTile());
@@ -295,10 +310,10 @@ public class GameController implements Initializable {
             }
         }
         
-        for (String key : armchairs.keySet())
+        /*for (String key : armchairs.keySet())
         {
             armchairs.get(key).step();
-        }
+        }*/
     }
     
     public void gameOver(){
@@ -369,6 +384,15 @@ public class GameController implements Initializable {
                     break;    
                 case SPACE: //1. játékos megpróbál átmozogni a kiválasztott csempére
                     Tile previousTileo1 = o1.getTile();
+                    Tile prevTileo2 = o2.getTile();
+                    boolean o2wasHolding = false;
+                    boolean o1wasntHolding = false;
+                    if(o1.getHoldsPanda() == null){
+                        o1wasntHolding = true;
+                    }
+                    if(o2.getHoldsPanda() != null){
+                        o2wasHolding = true;
+                    }
                     if(o1.getHoldsPanda() != null){
                         Panda heldo1 = o1.getHoldsPanda();
                         while(heldo1 != null){
@@ -377,6 +401,7 @@ public class GameController implements Initializable {
                         }
                     }
                     o1.move(o1.getTile().getNeighborIndex(selectedTileO1));
+                    
                     if(o1.getTile() == null){
                         gameOver();
                     }
@@ -386,6 +411,13 @@ public class GameController implements Initializable {
                         texts.get(getKey(tiles, newTileo1)).setText("O1");
                         if(o1.getHoldsPanda() == null){
                             texts.get(getKey(tiles, previousTileo1)).setText("");
+                        }
+                        if(newTileo1 == prevTileo2 && o2wasHolding == true && o1wasntHolding == true){
+                                texts.get(getKey(tiles, previousTileo1)).setText("O2");
+                                selectedTileO2 = o2.getTile().getNeighbor(0);
+                                if(texts.get(getKey(tiles, selectedTileO2)).getText() == "")
+                                    texts.get(getKey(tiles, selectedTileO2)).setText("*selected*");
+                                texts.get(getKey(tiles, selectedTileO2)).setStrikethrough(true);
                         }
                         else{
                             Panda heldo1 = o1.getHoldsPanda();
@@ -436,6 +468,15 @@ public class GameController implements Initializable {
                     break;
                 case ENTER: //2. játékos megpróbál átmozogni a kiválasztott csempére
                     Tile previousTileo2 = o2.getTile();
+                    Tile prevTileo1 = o1.getTile();
+                    boolean o1wasHolding = false;
+                    boolean o2wasntHolding = false;
+                    if(o2.getHoldsPanda() == null){
+                        o2wasntHolding = true;
+                    }
+                    if(o1.getHoldsPanda() != null){
+                        o1wasHolding = true;
+                    }
                     if(o2.getHoldsPanda() != null){
                         Panda heldo2 = o2.getHoldsPanda();
                         while(heldo2 != null){
@@ -453,6 +494,14 @@ public class GameController implements Initializable {
                         texts.get(getKey(tiles, newTileo2)).setText("O2");
                         if(o2.getHoldsPanda() == null){
                             texts.get(getKey(tiles, previousTileo2)).setText("");
+                        }
+                        if(newTileo2 == prevTileo1 && o1wasHolding == true && o2wasntHolding == true){
+                                texts.get(getKey(tiles, previousTileo2)).setText("O1");
+                                
+                                selectedTileO1 = o1.getTile().getNeighbor(0);
+                                if(texts.get(getKey(tiles, selectedTileO1)).getText() == "")
+                                    texts.get(getKey(tiles, selectedTileO1)).setText("*selected*");
+                                texts.get(getKey(tiles, selectedTileO1)).setUnderline(true);
                         }
                         else{
                             Panda heldo2 = o2.getHoldsPanda();
@@ -487,6 +536,6 @@ public class GameController implements Initializable {
         });
         
         //Elindítja a timert, megy az update loop
-        //timer.start();
+        timer.start();
     }
 }
